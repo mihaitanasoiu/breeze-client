@@ -87,19 +87,29 @@ let complexArrayMixin = {
 
 
 function getGoodAdds(complexArray: ComplexArray, adds: ComplexObject[]) {
+  // Filtering desactivated, as an a.complexAspect.parent !== complexArray.parent condition is false in case of a nested array
+  return adds;
+
+  // Original code :
+
   // remove any that are already added here
-  return adds.filter(function (a) {
+  /*return adds.filter(function (a) {
     // return a.parent !== complexArray.parent;  // TODO: check if this is actually a bug in original breezejs ???
     return a.complexAspect == null || a.complexAspect.parent !== complexArray.parent;
-  });
+  });*/
 }
 
 function processAdds(complexArray: ComplexArray, adds: ComplexObject[]) {
   adds.forEach(function (a) {
+    // Condition desactivated, as an a.complexAspect.parent !== complexArray.parent condition is false in case of a nested array
+
+    // Original code :
+
     // if (a.parent != null) { // TODO: check if this is actually a bug in original breezejs ???
-    if (a.complexAspect && a.complexAspect.parent != null) {
+    /*if (a.complexAspect && a.complexAspect.parent != null) {
       throw new Error("The complexObject is already attached. Either clone it or remove it from its current owner");
-    }
+    }*/
+
     setAspect(a, complexArray);
   });
 }
