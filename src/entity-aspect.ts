@@ -91,7 +91,7 @@ export class EntityAspect {
   /**
   A [[BreezeEvent]] that fires whenever any of the validation errors on this entity change.
   Note that this might be the removal of an error when some data on the entity is fixed.
-  @eventArgs - 
+  @eventArgs -
     - entity - The entity on which the validation errors are being added or removed.
     - added - An array containing any newly added [[ValidationError]]s
     - removed - An array containing any newly removed [[ValidationError]]s. This is those
@@ -118,7 +118,7 @@ export class EntityAspect {
       for any properties of a complex type.
     - oldValue - The old value of this property before the change.
     - newValue - The new value of this property after the change.
-    - parent - The immediate parent object for the changed property.  This will be a ComplexType instance as opposed to an Entity 
+    - parent - The immediate parent object for the changed property.  This will be a ComplexType instance as opposed to an Entity
       for any complex type or nested complex type properties.
 
   >      // assume order is an order entity attached to an EntityManager.
@@ -216,7 +216,7 @@ export class EntityAspect {
   /**
   Returns the value of a specified 'property path' for a specified entity.
 
-  The propertyPath can be either a string delimited with '.' or a string array.  
+  The propertyPath can be either a string delimited with '.' or a string array.
   **/
   // used by EntityQuery and Predicate
   static getPropertyPathValue(obj: Entity, propertyPath: string | string[]) {
@@ -227,10 +227,30 @@ export class EntityAspect {
       let nextValue = obj;
       // hack use of some to perform mapFirst operation.
       properties.some((prop) => {
-        nextValue = nextValue.getProperty(prop);
+        if (Array.isArray(nextValue)) {
+          const valuesArray = nextValue.reduce((res, value) => {
+            const val = value.getProperty(prop);
+            if (Array.isArray(val)) {
+              res.push(...val);
+            } else if (val || val === 0) {
+              res.push(val);
+            }
+            return res;
+          }, []);
+
+          if (valuesArray.length) {
+            nextValue = valuesArray;
+          } else {
+            nextValue = null;
+          }
+        } else {
+          nextValue = nextValue.getProperty(prop);
+        }
+
         return nextValue == null;
       });
-      return nextValue;
+
+      return Array.isArray(nextValue) ? nextValue.join(' ') : nextValue;
     }
   }
 
@@ -479,7 +499,7 @@ export class EntityAspect {
         <br/>   Note that even if the fetch returns nothing the property is still marked as loaded in this case.
     1. The property is scalar and has been set to a nonnull value.
     1. The [[EntityAspect.markNavigationPropertyAsLoaded]] was called.
-  
+
   >     var wasLoaded = emp.entityAspect.isNavigationPropertyLoaded("Orders");
   @param navigationProperty - The NavigationProperty or name of NavigationProperty to 'load'.
   **/
@@ -533,7 +553,7 @@ export class EntityAspect {
   or
   >      var orderDateProperty = order.entityType.getProperty("OrderDate");
   >      var isOk = order.entityAspect.validateProperty(OrderDateProperty);
-  @param property - The [[DataProperty]] or [[NavigationProperty]] to validate or a string 
+  @param property - The [[DataProperty]] or [[NavigationProperty]] to validate or a string
   with the name of the property or a property path with the path to a property of a complex object.
   @param context -  A context object used to pass additional information to each [[Validator]].
   @return Whether the entity passed validation.
@@ -561,7 +581,7 @@ export class EntityAspect {
   getValidationErrors(property: EntityProperty): ValidationError[];
   /**
   Returns the validation errors associated with either the entire entity or any specified property.
-  
+
   This method can return all of the errors for an Entity
   >      // assume order is an order entity attached to an EntityManager.
   >      var valErrors = order.entityAspect.getValidationErrors();
@@ -632,11 +652,11 @@ export class EntityAspect {
 
   /**
   Returns an [[EntityKey]] for the entity pointed to by the specified scalar NavigationProperty.
-  This only returns an EntityKey if the current entity is a 'child' entity along the specified NavigationProperty. 
+  This only returns an EntityKey if the current entity is a 'child' entity along the specified NavigationProperty.
   i.e. has a single parent.
 
-  @param navigationProperty - The [[NavigationProperty]] ( pointing to a parent). 
-  @returns Either a parent EntityKey if this is a 'child' entity or null;  
+  @param navigationProperty - The [[NavigationProperty]] ( pointing to a parent).
+  @returns Either a parent EntityKey if this is a 'child' entity or null;
   */
   getParentKey(navigationProperty: NavigationProperty) {
     if (!this.entity) return null;
@@ -654,7 +674,7 @@ export class EntityAspect {
 
   // TODO: refactor this and the static getPropertyPathValue.
   /**
-  Returns the value of a specified DataProperty or NavigationProperty or 'property path'.  
+  Returns the value of a specified DataProperty or NavigationProperty or 'property path'.
   **/
   getPropertyValue(property: string | DataProperty | NavigationProperty) {
     assertParam(property, "property").isString().or().isEntityProperty().check();
