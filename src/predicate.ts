@@ -1224,6 +1224,8 @@ function getBinaryPredicateFn(binaryPredicate: BinaryPredicate, dataType: DataTy
       break;
     case 'contains':
       predFn = function (v1, v2) {
+        v1 = v1 == null ? '' : String(v1);
+        v2 = v2 == null ? '' : String(v2);
         return stringContains(v1, v2, lqco);
       };
       break;
