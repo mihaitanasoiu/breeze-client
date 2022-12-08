@@ -9,6 +9,7 @@ export interface LocalQueryComparisonOptionsConfig {
   name?: string;
   /** Whether predicates that involve strings will be interpreted in a "caseSensitive" manner. Default is 'false'. */
   isCaseSensitive?: boolean;
+  ignoreAccents?: boolean;
   /* Whether or not to enforce the ANSI SQL standard
   of padding strings of unequal lengths before comparison with spaces. Note that per the standard, padding only occurs with equality and
   inequality predicates, and not with operations like 'startsWith', 'endsWith' or 'contains'.  Default is true. */
@@ -35,6 +36,8 @@ export class LocalQueryComparisonOptions {
   inequality predicates, and not with operations like 'startsWith', 'endsWith' or 'contains'.  Default is true. */
   usesSql92CompliantStringComparison: boolean;
 
+  ignoreAccents: boolean;
+
   /**
   LocalQueryComparisonOptions constructor
   >      // create a 'caseSensitive - non SQL' instance.
@@ -52,10 +55,11 @@ export class LocalQueryComparisonOptions {
   **/
   constructor(lqcoConfig: LocalQueryComparisonOptionsConfig) {
     assertConfig(lqcoConfig || {})
-        .whereParam("name").isOptional().isString()
-        .whereParam("isCaseSensitive").isOptional().isBoolean()
-        .whereParam("usesSql92CompliantStringComparison").isBoolean()
-        .applyAll(this);
+      .whereParam("name").isOptional().isString()
+      .whereParam("isCaseSensitive").isOptional().isBoolean()
+      .whereParam("ignoreAccents").isOptional().isBoolean()
+      .whereParam("usesSql92CompliantStringComparison").isBoolean()
+      .applyAll(this);
     if (!this.name) {
       this.name = core.getUuid();
     }
@@ -68,6 +72,7 @@ export class LocalQueryComparisonOptions {
   static caseInsensitiveSQL = new LocalQueryComparisonOptions({
     name: "caseInsensitiveSQL",
     isCaseSensitive: false,
+    ignoreAccents: false,
     usesSql92CompliantStringComparison: true
   });
 
