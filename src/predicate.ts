@@ -1253,6 +1253,12 @@ function stringEquals(a: any, b: any, lqco: LocalQueryComparisonOptions) {
     a = (a || "").toLowerCase();
     b = (b || "").toLowerCase();
   }
+
+  if (lqco.ignoreAccents) {
+    a = a.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    b = b.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
   return a === b;
 }
 
@@ -1261,6 +1267,12 @@ function stringStartsWith(a: any, b: any, lqco: LocalQueryComparisonOptions) {
     a = (a || "").toLowerCase();
     b = (b || "").toLowerCase();
   }
+
+  if (lqco.ignoreAccents) {
+    a = a.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    b = b.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
   return core.stringStartsWith(a, b);
 }
 
@@ -1269,6 +1281,12 @@ function stringEndsWith(a: any, b: any, lqco: LocalQueryComparisonOptions) {
     a = (a || "").toLowerCase();
     b = (b || "").toLowerCase();
   }
+
+  if (lqco.ignoreAccents) {
+    a = a.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    b = b.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
   return core.stringEndsWith(a, b);
 }
 
