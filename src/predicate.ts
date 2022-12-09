@@ -16,17 +16,17 @@ export interface OpMap {
   [key: string]: Op;
 }
 
-/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-@adapter (see [[IUriBuilderAdapter]])    
-@hidden 
+/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+@adapter (see [[IUriBuilderAdapter]])
+@hidden
 */
 export interface Visitor {
 
 }
 
-/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-@adapter (see [[IUriBuilderAdapter]])    
-@hidden 
+/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+@adapter (see [[IUriBuilderAdapter]])
+@hidden
 */
 export interface VisitContext {
   entityType?: EntityType;
@@ -36,9 +36,9 @@ export interface VisitContext {
   visitor?: Visitor;
 }
 
-/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-@adapter (see [[IUriBuilderAdapter]])    
-@hidden 
+/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+@adapter (see [[IUriBuilderAdapter]])
+@hidden
 */
 export interface ExpressionContext {
   entityType?: EntityType;
@@ -70,7 +70,7 @@ export class Predicate {
   >     let p2 = new Predicate("Region", FilterQueryOp.Equals, null);
   >     let query = new EntityQuery("Customers").where(p2);
   @param property - A property name, a nested property name or an expression involving a property name.
-  @param operator - 
+  @param operator -
   @param value - This will be treated as either a property expression or a literal depending on context.  In general,
   if the value can be interpreted as a property expression it will be, otherwise it will be treated as a literal.
   In most cases this works well, but you can also force the interpretation by making the value argument itself an object with a 'value'
@@ -88,10 +88,10 @@ export class Predicate {
 
   /**
   Same as using the ctor.
-  >      // so 
+  >      // so
   >      let p = Predicate.create(a, b, c);
-  >      // is the same as 
-  >      let p = new Predicate(a, b, c); 
+  >      // is the same as
+  >      let p = new Predicate(a, b, c);
   @param property -  A property name, a nested property name or an expression involving a property name.
   @param operator - the filter query operator.
   @param value - This will be treated as either a property expression or a literal depending on context.  In general,
@@ -151,7 +151,7 @@ export class Predicate {
   or
   >      let preds = [p1, p2, p3];
   >      let newPred = Predicate.and(preds);
-  @param predicates - multiple Predicates or an array of Predicate. 
+  @param predicates - multiple Predicates or an array of Predicate.
   Any null or undefined values passed in will be automatically filtered out before constructing the composite predicate.
   **/
   static and(...args: any[]) {
@@ -240,7 +240,7 @@ export class Predicate {
   The 'and' method is also used to write "fluent" expressions
   >      let p4 = Predicate.create("ShipCity", "startswith", "F")
   >        .and("Size", "gt", 2000);
-  @param predicates - multiple Predicates or an array of Predicates. 
+  @param predicates - multiple Predicates or an array of Predicates.
   Any null or undefined values passed in will be automatically filtered out before constructing the composite predicate.
   **/
   and(...args: any[]) {
@@ -262,7 +262,7 @@ export class Predicate {
   The 'or' method is also used to write "fluent" expressions
   >      let p4 = Predicate.create("ShipCity", "startswith", "F")
   >        .or("Size", "gt", 2000);
-  @param predicates - multiple Predicates or an array of Predicates. 
+  @param predicates - multiple Predicates or an array of Predicates.
   Any null or undefined values passed in will be automatically filtered out before constructing the composite predicate.
   **/
   or(...args: any[]) {
@@ -292,17 +292,17 @@ export class Predicate {
     return this.toJSONExt({ entityType: this._entityType });
   }
 
-  /** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-  @adapter (see [[IUriBuilderAdapter]])    
-  @hidden @internal 
+  /** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+  @adapter (see [[IUriBuilderAdapter]])
+  @hidden @internal
   */
   toJSONExt(context: VisitContext) {
     return this.visit(context, toJSONVisitor);
   }
 
-  /** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-  @adapter (see [[IUriBuilderAdapter]])    
-  @hidden @internal 
+  /** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+  @adapter (see [[IUriBuilderAdapter]])
+  @hidden @internal
   */
   toFunction(context: VisitContext) {
     return this.visit(context, toFunctionVisitor);
@@ -312,9 +312,9 @@ export class Predicate {
     return JSON.stringify(this);
   }
 
-  /** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-  @adapter (see [[IUriBuilderAdapter]])    
-  @hidden @internal 
+  /** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+  @adapter (see [[IUriBuilderAdapter]])
+  @hidden @internal
   */
   visit(context: VisitContext, visitor?: Visitor) {
     if (core.isEmpty(context)) {
@@ -469,9 +469,9 @@ function updateAliasMap(aliasMap: OpMap, opStr: string, op: Op) {
   });
 }
 
-/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-@adapter (see [[IUriBuilderAdapter]])    
-@hidden @internal 
+/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+@adapter (see [[IUriBuilderAdapter]])
+@hidden @internal
 */
 class PassthruPredicate extends Predicate {
   value: any;
@@ -484,9 +484,9 @@ class PassthruPredicate extends Predicate {
 }
 Error['x'] = PassthruPredicate.prototype._initialize('passthruPredicate');
 
-/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-@adapter (see [[IUriBuilderAdapter]])    
-@hidden 
+/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+@adapter (see [[IUriBuilderAdapter]])
+@hidden
 */
 export class UnaryPredicate extends Predicate {
   op: Op;
@@ -506,9 +506,9 @@ Error['x'] = UnaryPredicate.prototype._initialize('unaryPredicate', {
   'not': { aliases: ['!', '~'] },
 });
 
-/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-@adapter (see [[IUriBuilderAdapter]])    
-@hidden 
+/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+@adapter (see [[IUriBuilderAdapter]])
+@hidden
 */
 export class BinaryPredicate extends Predicate {
   op: Op;
@@ -589,8 +589,8 @@ Error['x'] = BinaryPredicate.prototype._initialize('binaryPredicate', {
   }
 });
 
-/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-@adapter (see [[IUriBuilderAdapter]])    
+/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+@adapter (see [[IUriBuilderAdapter]])
 @hidden
 */
 export class AndOrPredicate extends Predicate {
@@ -629,9 +629,9 @@ Error['x'] = AndOrPredicate.prototype._initialize("andOrPredicate", {
   'or': { aliases: ['||'] }
 } );
 
-/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-@adapter (see [[IUriBuilderAdapter]])    
-@hidden 
+/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+@adapter (see [[IUriBuilderAdapter]])
+@hidden
 */
 export class AnyAllPredicate extends Predicate {
   op: Op;
@@ -681,9 +681,9 @@ export class PredicateExpression {
   }
 }
 
-/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-@adapter (see [[IUriBuilderAdapter]])    
-@hidden 
+/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+@adapter (see [[IUriBuilderAdapter]])
+@hidden
 */
 export class LitExpr extends PredicateExpression {
   value: any;
@@ -734,9 +734,9 @@ function resolveDataType(dataType?: DataType | string) {
   throw new Error("The dataType parameter passed into this literal expression is not a 'DataType'" + dataType);
 }
 
-/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-@adapter (see [[IUriBuilderAdapter]])    
-@hidden 
+/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+@adapter (see [[IUriBuilderAdapter]])
+@hidden
 */
 export class PropExpr extends PredicateExpression {
   propertyPath: string;
@@ -773,8 +773,8 @@ export class PropExpr extends PredicateExpression {
 
 }
 
-/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation. 
-@adapter (see [[IUriBuilderAdapter]])    
+/** For use by breeze plugin authors only. The class is for use in building a [[IUriBuilderAdapter]] implementation.
+@adapter (see [[IUriBuilderAdapter]])
 @hidden @dynamic
 */
 export class FnExpr extends PredicateExpression {
@@ -1036,7 +1036,7 @@ function parseFnExpr(source: string, parts: string[], tokens: string[], exprCont
   } catch (e) {
     // TODO: removed old code here
     // return null;
-    // and replaced with 
+    // and replaced with
     throw e;
   }
 }
@@ -1255,6 +1255,12 @@ function stringEquals(a: any, b: any, lqco: LocalQueryComparisonOptions) {
     a = (a || "").toLowerCase();
     b = (b || "").toLowerCase();
   }
+
+  if (lqco.ignoreAccents) {
+    a = a.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    b = b.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
   return a === b;
 }
 
@@ -1263,6 +1269,12 @@ function stringStartsWith(a: any, b: any, lqco: LocalQueryComparisonOptions) {
     a = (a || "").toLowerCase();
     b = (b || "").toLowerCase();
   }
+
+  if (lqco.ignoreAccents) {
+    a = a.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    b = b.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
   return core.stringStartsWith(a, b);
 }
 
@@ -1271,6 +1283,12 @@ function stringEndsWith(a: any, b: any, lqco: LocalQueryComparisonOptions) {
     a = (a || "").toLowerCase();
     b = (b || "").toLowerCase();
   }
+
+  if (lqco.ignoreAccents) {
+    a = a.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    b = b.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
   return core.stringEndsWith(a, b);
 }
 
@@ -1279,6 +1297,12 @@ function stringContains(a: any, b: any, lqco: LocalQueryComparisonOptions) {
     a = (a || "").toLowerCase();
     b = (b || "").toLowerCase();
   }
+
+  if (lqco.ignoreAccents) {
+    a = a.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    b = b.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
   return a.indexOf(b) >= 0;
 }
 
